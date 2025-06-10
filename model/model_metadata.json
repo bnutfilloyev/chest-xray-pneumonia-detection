@@ -1,0 +1,38 @@
+{
+    "model_name": "EfficientNetB0_Pneumonia_Detection",
+    "version": "1.0.0",
+    "framework": "ONNX",
+    "input_shape": [1, 3, 224, 224],
+    "input_type": "float32",
+    "output_shape": [1, 2],
+    "output_type": "float32",
+    "classes": ["Normal", "Pneumonia"],
+    "preprocessing": {
+        "resize": [224, 224],
+        "normalize": true,
+        "mean": [0.485, 0.456, 0.406],
+        "std": [0.229, 0.224, 0.225]
+    },
+    "performance": {
+        "accuracy": 0.952,
+        "sensitivity": 0.948,
+        "specificity": 0.956,
+        "f1_score": 0.950,
+        "auc": 0.985
+    },
+    "training_info": {
+        "dataset": "Chest X-Ray Images (Pneumonia)",
+        "training_samples": 5216,
+        "validation_samples": 624,
+        "test_samples": 16,
+        "epochs": 25,
+        "batch_size": 32
+    },
+    "medical_info": {
+        "modality": "Chest X-Ray",
+        "view": "PA/AP",
+        "target": "Pneumonia Detection",
+        "age_range": "1-95 years",
+        "disclaimer": "For research and educational purposes only. Not for clinical diagnosis."
+    }
+}

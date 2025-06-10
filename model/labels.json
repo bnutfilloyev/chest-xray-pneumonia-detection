@@ -1,0 +1,16 @@
+{
+    "labels": {
+        "0": "Normal",
+        "1": "Pneumonia"
+    },
+    "class_names": ["Normal", "Pneumonia"],
+    "confidence_thresholds": {
+        "high": 0.95,
+        "medium": 0.80,
+        "low": 0.60
+    },
+    "interpretation": {
+        "Normal": "No signs of pneumonia detected in the chest X-ray",
+        "Pneumonia": "Pneumonia indicators detected in the chest X-ray"
+    }
+}
