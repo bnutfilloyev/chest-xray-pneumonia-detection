@@ -162,11 +162,12 @@ git clone https://github.com/yourusername/pneumonia-ai-detector.git
 cd pneumonia-ai-detector
 
 # Start with Docker (Recommended)
-docker-compose up -d
+docker-compose -f docker-compose.dev.yml up -d --build
 
 # Access the application
 # Frontend: http://localhost:3000
 # Backend API: http://localhost:8000
+# API Docs: http://localhost:8000/docs
 ```
 
 ---
@@ -180,12 +181,25 @@ docker-compose up -d
 git clone https://github.com/yourusername/pneumonia-ai-detector.git
 cd pneumonia-ai-detector
 
-# 2. Build and start services
-docker-compose up --build
+# 2. Copy environment variables
+cp .env.example .env
 
-# 3. Initialize database (first time only)
-docker-compose exec backend python scripts/init_db.py
+# 3. Start development environment
+docker-compose -f docker-compose.dev.yml up --build
+
+# 4. View application
+# Frontend: http://localhost:3000
+# Backend: http://localhost:8000
+# API Docs: http://localhost:8000/docs
 ```
+
+**For Production:**
+```bash
+# Production environment
+docker-compose up --build -d
+```
+
+📖 **Detailed Docker Setup**: See [DOCKER_SETUP.md](DOCKER_SETUP.md) for complete Docker configuration guide.
 
 ### 🛠️ **Option 2: Manual Development Setup**
 

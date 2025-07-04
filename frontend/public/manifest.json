@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Pneumonia AI",
+  "name": "Pneumonia AI Detector - Medical Diagnosis",
   "icons": [
     {
       "src": "favicon.ico",
@@ -20,6 +20,7 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#1e40af",
+  "background_color": "#ffffff",
+  "description": "AI-powered pneumonia detection from chest X-ray images"
 }

@@ -61,6 +61,11 @@ Thumbs.db
 
 # Docker
 .dockerignore
+docker-compose.override.yml
+
+# Docker volumes and data
+postgres_data/
+postgres_dev_data/
 
 # Model files (too large for git)
 *.onnx

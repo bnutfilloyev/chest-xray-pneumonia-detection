@@ -1,0 +1,80 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database for Development
+  db:
+    image: postgres:15
+    container_name: pneumonia-db-dev
+    environment:
+      POSTGRES_DB: pneumonia_detection
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+    networks:
+      - pneumonia-dev-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Backend Development Service
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: pneumonia-backend-dev
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@db:5432/pneumonia_detection
+      - ENVIRONMENT=development
+      - JWT_SECRET_KEY=dev-secret-key
+      - CORS_ORIGINS=http://localhost:3000,http://frontend:3000
+      - DEBUG=true
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - ./backend/uploads:/app/uploads
+      - ./model:/app/model
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - pneumonia-dev-network
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload --log-level debug
+    restart: unless-stopped
+
+  # Frontend Development Service
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: pneumonia-frontend-dev
+    environment:
+      - REACT_APP_API_URL=http://localhost:8000
+      - REACT_APP_ENVIRONMENT=development
+      - WATCHPACK_POLLING=true
+      - FAST_REFRESH=false
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    networks:
+      - pneumonia-dev-network
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+
+volumes:
+  postgres_dev_data:
+    driver: local
+
+networks:
+  pneumonia-dev-network:
+    driver: bridge
