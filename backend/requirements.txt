@@ -30,3 +30,4 @@ aiofiles
 python-magic
 python-dotenv
 gunicorn
+pydantic[email]
