@@ -3,6 +3,10 @@
 # Test script for Docker Compose setup
 set -e
 
+# pull from git
+echo "🔄 Pulling latest changes from Git..."
+git pull origin master || { echo "❌ Git pull failed"; exit 1; }
+
 echo "🐳 Testing Docker Compose Setup..."
 
 # Function to check if service is running
