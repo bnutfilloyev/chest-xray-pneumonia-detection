@@ -149,25 +149,80 @@ graph TB
 ## 🚀 **Quick Start**
 
 ### 📋 **Prerequisites**
-- Python 3.9+
-- Node.js 16+
 - Docker & Docker Compose
-- PostgreSQL (or use Docker)
+- Git
 
-### ⚡ **1-Minute Setup**
+### ⚡ **1-Command Setup**
+
+The fastest way to get started with the complete application including mock data:
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/pneumonia-ai-detector.git
-cd pneumonia-ai-detector
+git clone https://github.com/bnutfilloyev/chest-xray-pneumonia-detection.git
+cd chest-xray-pneumonia-detection
 
-# Start with Docker (Recommended)
-docker-compose -f docker-compose.dev.yml up -d --build
+# 🚀 One-command setup (includes mock data)
+./quick-setup.sh
+```
 
-# Access the application
-# Frontend: http://localhost:3000
-# Backend API: http://localhost:8000
-# API Docs: http://localhost:8000/docs
+This script will:
+- ✅ Start all services (Database, Backend, Frontend)
+- ✅ Initialize database tables
+- ✅ Generate 1000+ mock patients and 2500+ predictions
+- ✅ Test all API endpoints
+- ✅ Show you access URLs and useful commands
+
+### 🧪 **Test & Verify Setup**
+
+```bash
+# Alternative: Full test with verification
+./test-docker-setup.sh
+```
+
+This comprehensive test script:
+- ✅ Pulls latest code from Git
+- ✅ Builds and starts all containers
+- ✅ Waits for services to be ready
+- ✅ Initializes database and generates mock data
+- ✅ Tests all API endpoints
+- ✅ Shows database statistics
+- ✅ Provides useful management commands
+
+### 🌐 **Access Your Application**
+
+After running the setup script:
+
+- **Frontend (React App)**: http://localhost:3000
+- **Backend API**: http://localhost:8000
+- **Interactive API Docs**: http://localhost:8000/docs
+- **Database**: localhost:5432 (pneumonia_detection)
+
+### 📊 **Mock Data Included**
+
+The setup automatically generates realistic mock data:
+- **1,000 patients** with Uzbek names and addresses
+- **2,500 medical predictions** with realistic confidence scores
+- **5,000 audit logs** for compliance tracking
+- **90 days** of system statistics
+- **24 weeks** of analytics data
+
+### 🛠️ **Quick Commands**
+
+```bash
+# View application status
+docker-compose -f docker-compose.dev.yml ps
+
+# View logs
+docker-compose -f docker-compose.dev.yml logs -f [backend/frontend/db]
+
+# Stop services
+docker-compose -f docker-compose.dev.yml down
+
+# Full reset (removes all data)
+docker-compose -f docker-compose.dev.yml down -v
+
+# Add more mock data
+docker-compose -f docker-compose.dev.yml exec backend python scripts/generate_mock_data.py
 ```
 
 ---

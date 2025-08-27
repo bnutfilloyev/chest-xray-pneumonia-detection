@@ -18,6 +18,7 @@ scikit-learn
 pandas
 python-logging-json-formatter
 starlette-admin
+faker
 httpx
 pytest
 pytest-asyncio
