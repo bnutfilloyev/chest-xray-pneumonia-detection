@@ -9,7 +9,19 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     curl \
     libpq-dev \
+    libglib2.0-0 \
+    libsm6 \
+    libxext6 \
+    libxrender-dev \
+    libgomp1 \
+    libgfortran5 \
+    libblas3 \
+    liblapack3 \
     && rm -rf /var/lib/apt/lists/*
+
+
+# Upgrade pip
+RUN pip install --upgrade pip
 
 # Copy requirements first for better caching
 COPY requirements.txt .

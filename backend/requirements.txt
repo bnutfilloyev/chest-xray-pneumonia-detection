@@ -10,7 +10,7 @@ python-decouple
 pydantic
 pydantic-settings
 onnxruntime
-opencv-python
+opencv-python-headless
 pillow
 numpy
 scipy

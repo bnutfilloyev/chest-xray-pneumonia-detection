@@ -8,9 +8,15 @@ import time
 from typing import Dict, Any, Optional, Tuple
 import numpy as np
 from PIL import Image
-import cv2
 import base64
 import io
+
+try:
+    import cv2
+    CV2_AVAILABLE = True
+except ImportError:
+    CV2_AVAILABLE = False
+    cv2 = None
 
 try:
     import onnxruntime as ort
