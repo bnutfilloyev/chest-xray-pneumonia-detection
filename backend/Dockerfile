@@ -10,13 +10,7 @@ RUN apt-get update && apt-get install -y \
     curl \
     libpq-dev \
     libglib2.0-0 \
-    libsm6 \
-    libxext6 \
-    libxrender-dev \
     libgomp1 \
-    libgfortran5 \
-    libblas3 \
-    liblapack3 \
     && rm -rf /var/lib/apt/lists/*
 
 

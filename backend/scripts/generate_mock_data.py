@@ -353,9 +353,6 @@ def main():
     """Main function to generate all mock data"""
     print("🚀 Starting mock data generation...")
     
-    # Create tables if they don't exist
-    create_tables()
-    
     # Get database session
     db = SessionLocal()
     
@@ -366,20 +363,29 @@ def main():
         
         if patient_count > 0 or prediction_count > 0:
             print(f"⚠️  Database already contains {patient_count} patients and {prediction_count} predictions")
-            response = input("Do you want to clear existing data and regenerate? (y/N): ")
-            if response.lower() != 'y':
+            
+            # In Docker/CI environment, automatically regenerate data
+            import os
+            if os.getenv('DOCKER_ENV') or os.getenv('CI') or not os.isatty(0):
+                print("🔄 Running in automated environment - regenerating data...")
+                should_regenerate = True
+            else:
+                response = input("Do you want to clear existing data and regenerate? (y/N): ")
+                should_regenerate = response.lower() == 'y'
+            
+            if should_regenerate:
+                # Clear existing data
+                print("🗑️  Clearing existing data...")
+                db.query(WeeklyStats).delete()
+                db.query(SystemStats).delete()
+                db.query(AuditLog).delete()
+                db.query(Prediction).delete()
+                db.query(Patient).delete()
+                db.commit()
+                print("✅ Existing data cleared")
+            else:
                 print("Skipping data generation")
                 return
-            
-            # Clear existing data
-            print("🗑️  Clearing existing data...")
-            db.query(WeeklyStats).delete()
-            db.query(SystemStats).delete()
-            db.query(AuditLog).delete()
-            db.query(Prediction).delete()
-            db.query(Patient).delete()
-            db.commit()
-            print("✅ Existing data cleared")
         
         # Generate data
         generate_patients(db, 1000)

@@ -10,7 +10,7 @@ from sqlalchemy.pool import StaticPool
 # Database configuration
 DATABASE_URL = os.getenv(
     "DATABASE_URL", 
-    "postgresql://postgres:postgres@localhost:5432/pneumonia_db"
+    "postgresql://postgres:password@localhost:5432/pneumonia_detection"
 )
 
 # Create SQLAlchemy engine
