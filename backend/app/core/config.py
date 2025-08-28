@@ -32,7 +32,7 @@ class Settings(BaseSettings):
     onnx_model_path: str = Field(default="model/pneumonia_model.onnx", env="ONNX_MODEL_PATH")
     model_config_path: str = Field(default="model/model_config.json", env="MODEL_CONFIG_PATH")
     confidence_threshold: float = Field(default=0.7, env="CONFIDENCE_THRESHOLD")
-    model_input_size: int = Field(default=224, env="MODEL_INPUT_SIZE")
+    model_input_size: int = Field(default=256, env="MODEL_INPUT_SIZE")
     
     # File Upload
     upload_dir: str = Field(default="uploads", env="UPLOAD_DIR")
