@@ -33,12 +33,13 @@ services:
       - JWT_SECRET_KEY=dev-secret-key
       - CORS_ORIGINS=http://localhost:3000,http://frontend:3000
       - DEBUG=true
+      - ONNX_MODEL_PATH=model/pneumonia_model.onnx
     ports:
       - "8000:8000"
     volumes:
       - ./backend:/app
       - ./backend/uploads:/app/uploads
-      - ./model:/app/model
+      - ./backend/model:/app/model
     depends_on:
       db:
         condition: service_healthy

@@ -112,11 +112,16 @@ class ModelService:
             img_array = (img_array - mean) / std
             
             # Add batch dimension - keep HWC format for covid19_resnet model
-            # Input shape: [1, height, width, channels]
+            # Input shape: [1, height, width, channels] = [1, 256, 256, 3]
             img_array = np.expand_dims(img_array, axis=0)  # Add batch dimension
             
-            # Ensure float32 dtype
+            # Ensure float32 dtype and correct shape
             img_array = img_array.astype(np.float32)
+            
+            # Verify shape matches expected input: [1, 256, 256, 3]
+            expected_shape = (1, settings.model_input_size, settings.model_input_size, 3)
+            if img_array.shape != expected_shape:
+                logger.warning(f"Input shape {img_array.shape} doesn't match expected {expected_shape}")
             
             return img_array
             
