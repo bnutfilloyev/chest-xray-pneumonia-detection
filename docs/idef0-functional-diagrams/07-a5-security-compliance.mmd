@@ -1,0 +1,35 @@
+graph TB
+    subgraph "A5: Ensure Security & Compliance"
+        A51[🔐 MANAGE<br/>AUTHENTICATION<br/>A-5.1]
+        A52[🛡️ ENFORCE<br/>ACCESS CONTROL<br/>A-5.2]
+        A53[📝 MAINTAIN<br/>AUDIT LOGS<br/>A-5.3]
+        A54[⚖️ ENSURE HIPAA<br/>COMPLIANCE<br/>A-5.4]
+    end
+
+    %% External entities
+    USERS[👥 System Users]
+    HIPAA[📋 HIPAA<br/>Regulations]
+    AUDIT[(📊 Audit<br/>Database)]
+    SECURITY[🔒 Security<br/>Policies]
+
+    %% Inputs
+    USERS -->|Login Credentials<br/>Access Requests| A51
+    HIPAA -->|Privacy Rules<br/>Security Standards| A54
+    SECURITY -->|Access Policies<br/>Role Definitions| A52
+
+    %% Inter-function flows
+    A51 -->|Authenticated Users<br/>JWT Tokens| A52
+    A52 -->|Authorization Events<br/>Access Logs| A53
+    A53 -->|Audit Trail<br/>Compliance Data| A54
+    A54 -->|Security Requirements| A51
+
+    %% Outputs
+    A52 -->|Access Decisions<br/>Permission Grants| USERS
+    A53 -->|Audit Reports<br/>Activity Logs| AUDIT
+    A54 -->|Compliance Status<br/>Violation Reports| HIPAA
+    A54 -->|Security Metrics| AUDIT
+
+    style A51 fill:#e8f5e8,stroke:#2e7d32
+    style A52 fill:#e3f2fd,stroke:#1565c0
+    style A53 fill:#fff8e1,stroke:#f57f17
+    style A54 fill:#fce4ec,stroke:#c2185b

@@ -1,0 +1,14 @@
+sequenceDiagram
+    participant U as User
+    participant P as Patient Table
+    participant PR as Prediction Table
+    participant A as Audit Log
+    participant S as System Stats
+
+    U->>P: 1. Lookup/Create Patient
+    P-->>U: Patient ID
+    U->>PR: 2. Insert Prediction Record
+    PR->>A: 3. Log Prediction Action
+    PR->>S: 4. Update Daily Stats
+    S->>A: 5. Log Statistics Update
+    PR-->>U: Prediction Results

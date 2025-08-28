@@ -1,0 +1,33 @@
+graph TB
+    subgraph "Environment"
+        D[👨‍⚕️ Healthcare<br/>Professionals]
+        C[📋 Medical<br/>Standards]
+        M[🔬 ML Models]
+        P[👥 Patients]
+        R[📊 Reports]
+        A[📈 Analytics]
+        S[🔒 Security<br/>Requirements]
+    end
+
+    subgraph "System Boundary"
+        A0[🏥 PNEUMONIA AI<br/>DETECTION SYSTEM<br/>A-0]
+    end
+
+    %% Inputs
+    P -->|Patient Data<br/>X-ray Images| A0
+    C -->|HIPAA Regulations<br/>Medical Protocols| A0
+    M -->|EfficientNetB0<br/>ONNX Model| A0
+    S -->|Security Policies<br/>Access Controls| A0
+    
+    %% Controls
+    D -->|Medical Expertise<br/>Review Requirements| A0
+    
+    %% Outputs
+    A0 -->|Pneumonia Diagnoses<br/>Confidence Scores| R
+    A0 -->|Patient Records<br/>Historical Data| A
+    A0 -->|Audit Logs<br/>Compliance Reports| S
+
+    style A0 fill:#e1f5fe,stroke:#01579b,stroke-width:3px
+    style D fill:#fff3e0,stroke:#ef6c00
+    style P fill:#f3e5f5,stroke:#6a1b9a
+    style C fill:#e8f5e8,stroke:#2e7d32

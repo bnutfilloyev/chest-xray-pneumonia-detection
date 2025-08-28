@@ -1,0 +1,34 @@
+graph TB
+    subgraph "A1: Manage Patient Data"
+        A11[📝 REGISTER<br/>NEW PATIENTS<br/>A-1.1]
+        A12[📋 UPDATE PATIENT<br/>INFORMATION<br/>A-1.2]
+        A13[🔍 SEARCH & RETRIEVE<br/>PATIENT RECORDS<br/>A-1.3]
+        A14[📈 TRACK PATIENT<br/>HISTORY<br/>A-1.4]
+    end
+
+    %% External inputs
+    DOC[👨‍⚕️ Healthcare Staff]
+    PAT[👥 Patients]
+    DB[(🗃️ PostgreSQL<br/>Database)]
+
+    %% Inputs
+    PAT -->|Personal Information<br/>Medical History| A11
+    DOC -->|Patient Updates<br/>Medical Notes| A12
+    DOC -->|Search Queries<br/>Patient ID| A13
+
+    %% Inter-function flows
+    A11 -->|New Patient Record| A12
+    A11 -->|Patient Database| DB
+    A12 -->|Updated Records| A13
+    A12 -->|Patient Changes| A14
+    A13 -->|Patient Data| A14
+
+    %% Outputs
+    A13 -->|Patient Information<br/>Medical Records| DOC
+    A14 -->|Patient Timeline<br/>Historical Data| DOC
+    A14 -->|Updated Records| DB
+
+    style A11 fill:#e8f5e8,stroke:#2e7d32
+    style A12 fill:#e3f2fd,stroke:#1565c0
+    style A13 fill:#fff8e1,stroke:#f57f17
+    style A14 fill:#fce4ec,stroke:#c2185b

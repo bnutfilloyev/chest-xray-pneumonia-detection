@@ -1,53 +1,14 @@
 # 🗄️ IDEF1x Data Model - Pneumonia AI Detection System
 
+This document presents the IDEF1X (Integration Definition for Information Modeling) data model for the Pneumonia AI Detection System. IDEF1X is a semantic data modeling technique used to create clear, precise representations of data structures and relationships in information systems.
+
+All diagrams have been generated as high-quality PNG images for better visualization and documentation purposes.
+
 ## Entity-Relationship Diagram (ERD)
 
-```mermaid
-erDiagram
-    PATIENT ||--o{ PREDICTION : "has"
-    PATIENT ||--o{ AUDIT_LOG : "involves"
-    PREDICTION ||--o{ AUDIT_LOG : "tracks"
-    SYSTEM_STATS ||--o{ WEEKLY_STATS : "aggregates"
-    
-    PATIENT {
-        int id PK "Primary Key"
-        string patient_id UK "Unique Patient ID"
-        string first_name "First Name"
-        string last_name "Last Name"
-        int age "Age in years"
-        string gender "Male/Female/Other"
-        string phone "Contact Number"
-        string email "Email Address"
-        text address "Home Address"
-        string medical_record_number "MRN"
-        json emergency_contact "Emergency Contact Info"
-        json insurance_info "Insurance Details"
-        datetime created_at "Record Creation Time"
-        datetime updated_at "Last Update Time"
-    }
-    
-    PREDICTION {
-        string id PK "UUID Primary Key"
-        int patient_id FK "Foreign Key to Patient"
-        string image_filename "Stored Image Name"
-        string original_filename "Original Upload Name"
-        string image_path "File System Path"
-        string prediction "NORMAL or PNEUMONIA"
-        float confidence "Confidence Score 0-1"
-        json confidence_scores "Detailed Scores"
-        float inference_time "AI Processing Time"
-        json image_size "Width x Height"
-        text clinical_notes "Doctor Notes"
-        boolean reviewed "Review Status"
-        string reviewed_by "Reviewer ID"
-        datetime reviewed_at "Review Timestamp"
-        datetime created_at "Prediction Timestamp"
-    }
-    
-    AUDIT_LOG {
-        int id PK "Primary Key"
-        string user_id "User Identifier"
-        string action_type "Action Category"
+![Entity Relationship Diagram](docs/idef1x-data-diagrams/01-entity-relationship-diagram.png)
+
+*The ERD shows the complete data model with all entities, attributes, and relationships in the pneumonia detection system, including patients, predictions, audit logs, and statistical aggregations.*
         string entity_type "Affected Entity"
         string entity_id "Entity Identifier"
         json details "Action Details"
@@ -320,54 +281,15 @@ CREATE INDEX idx_weekly_range ON weekly_stats(week_start, week_end);
 
 ### 🔄 Prediction Workflow Data Flow
 
-```mermaid
-sequenceDiagram
-    participant U as User
-    participant P as Patient Table
-    participant PR as Prediction Table
-    participant A as Audit Log
-    participant S as System Stats
+![Prediction Workflow Sequence](docs/idef1x-data-diagrams/02-prediction-workflow-sequence.png)
 
-    U->>P: 1. Lookup/Create Patient
-    P-->>U: Patient ID
-    U->>PR: 2. Insert Prediction Record
-    PR->>A: 3. Log Prediction Action
-    PR->>S: 4. Update Daily Stats
-    S->>A: 5. Log Statistics Update
-    PR-->>U: Prediction Results
-```
+*This sequence diagram shows the data flow during a pneumonia prediction workflow, including patient lookup, prediction recording, audit logging, and statistics updates.*
 
 ### 📊 Analytics Data Aggregation
 
-```mermaid
-graph LR
-    subgraph "Daily Operations"
-        P[Patient<br/>Operations]
-        PR[Prediction<br/>Results]
-        A[Audit<br/>Activities]
-    end
+![Analytics Data Aggregation](docs/idef1x-data-diagrams/03-analytics-aggregation.png)
 
-    subgraph "Daily Aggregation"
-        DS[Daily<br/>System Stats]
-    end
-
-    subgraph "Weekly Aggregation"
-        WS[Weekly<br/>Stats]
-    end
-
-    subgraph "Reporting"
-        R[Dashboard<br/>Reports]
-        E[Export<br/>Files]
-    end
-
-    P --> DS
-    PR --> DS
-    A --> DS
-    DS --> WS
-    DS --> R
-    WS --> R
-    R --> E
-```
+*This diagram illustrates how data flows from daily operations through aggregation layers to reporting systems, showing the transformation from transactional data to analytical insights.*
 
 ## HIPAA Compliance Data Classification
 

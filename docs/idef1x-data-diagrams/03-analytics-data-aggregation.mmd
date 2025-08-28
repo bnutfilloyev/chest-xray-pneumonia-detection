@@ -1,0 +1,27 @@
+graph LR
+    subgraph "Daily Operations"
+        P[Patient<br/>Operations]
+        PR[Prediction<br/>Results]
+        A[Audit<br/>Activities]
+    end
+
+    subgraph "Daily Aggregation"
+        DS[Daily<br/>System Stats]
+    end
+
+    subgraph "Weekly Aggregation"
+        WS[Weekly<br/>Stats]
+    end
+
+    subgraph "Reporting"
+        R[Dashboard<br/>Reports]
+        E[Export<br/>Files]
+    end
+
+    P --> DS
+    PR --> DS
+    A --> DS
+    DS --> WS
+    DS --> R
+    WS --> R
+    R --> E

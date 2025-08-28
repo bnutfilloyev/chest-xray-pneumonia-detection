@@ -1,0 +1,37 @@
+graph TB
+    subgraph "A3: Perform AI Diagnosis"
+        A31[🚀 LOAD AI MODEL<br/>ONNX Runtime<br/>A-3.1]
+        A32[🧠 RUN INFERENCE<br/>EfficientNetB0<br/>A-3.2]
+        A33[📊 CALCULATE<br/>CONFIDENCE SCORES<br/>A-3.3]
+        A34[⚖️ VALIDATE &<br/>INTERPRET RESULTS<br/>A-3.4]
+    end
+
+    %% External entities
+    MODEL[🤖 EfficientNetB0<br/>ONNX Model]
+    THRESH[📏 Confidence<br/>Thresholds]
+    VALID[✅ Medical<br/>Validation Rules]
+
+    %% Inputs
+    MODEL -->|Pre-trained Weights<br/>Model Architecture| A31
+    THRESH -->|Confidence Threshold<br/>0.7 Default| A33
+
+    %% From A2
+    A2_OUT[📤 From A-2<br/>Processed Images] -->|Normalized Tensors<br/>224x224x3| A32
+
+    %% Inter-function flows
+    A31 -->|Loaded Model<br/>Session Object| A32
+    A32 -->|Raw Predictions<br/>Logits| A33
+    A33 -->|Probability Scores<br/>NORMAL/PNEUMONIA| A34
+    A34 -->|Validated Results| A33
+
+    %% Outputs
+    A34 -->|Diagnosis Result<br/>Confidence Score| A4_IN[📥 To A-4<br/>Reports & Analytics]
+    A34 -->|Prediction Metadata<br/>Inference Time| A1_IN[📥 To A-1<br/>Patient Records]
+
+    %% Validation
+    VALID -->|Medical Interpretation<br/>Quality Checks| A34
+
+    style A31 fill:#e8f5e8,stroke:#2e7d32
+    style A32 fill:#e3f2fd,stroke:#1565c0
+    style A33 fill:#fff8e1,stroke:#f57f17
+    style A34 fill:#fce4ec,stroke:#c2185b

@@ -1,0 +1,41 @@
+graph TB
+    subgraph "A0: Pneumonia AI Detection System"
+        A1[📤 MANAGE<br/>PATIENT DATA<br/>A-1]
+        A2[🔍 PROCESS<br/>MEDICAL IMAGES<br/>A-2]
+        A3[🤖 PERFORM AI<br/>DIAGNOSIS<br/>A-3]
+        A4[📊 GENERATE<br/>REPORTS & ANALYTICS<br/>A-4]
+        A5[🛡️ ENSURE SECURITY<br/>& COMPLIANCE<br/>A-5]
+    end
+
+    %% External Entities
+    DOC[👨‍⚕️ Healthcare<br/>Professionals]
+    PAT[👥 Patients]
+    REG[📋 Regulatory<br/>Bodies]
+    SYS[💾 Storage<br/>Systems]
+
+    %% Inputs from External
+    PAT -->|Patient Demographics<br/>Medical History| A1
+    DOC -->|X-ray Images<br/>Clinical Notes| A2
+    REG -->|HIPAA Requirements<br/>Medical Standards| A5
+
+    %% Inter-function flows
+    A1 -->|Validated Patient Data| A2
+    A1 -->|Patient Database| A4
+    A2 -->|Processed Images<br/>Metadata| A3
+    A3 -->|AI Predictions<br/>Confidence Scores| A4
+    A3 -->|Diagnostic Results| A1
+    A5 -->|Security Policies| A1
+    A5 -->|Access Controls| A2
+    A5 -->|Audit Requirements| A4
+
+    %% Outputs to External
+    A1 -->|Updated Patient Records| SYS
+    A4 -->|Diagnostic Reports<br/>Statistics| DOC
+    A4 -->|Performance Metrics| REG
+    A5 -->|Compliance Reports<br/>Audit Logs| REG
+
+    style A1 fill:#e3f2fd,stroke:#1976d2
+    style A2 fill:#f3e5f5,stroke:#7b1fa2
+    style A3 fill:#e8f5e8,stroke:#388e3c
+    style A4 fill:#fff3e0,stroke:#f57c00
+    style A5 fill:#ffebee,stroke:#d32f2f

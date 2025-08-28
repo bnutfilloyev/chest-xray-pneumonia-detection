@@ -1,0 +1,78 @@
+erDiagram
+    PATIENT ||--o{ PREDICTION : "has"
+    PATIENT ||--o{ AUDIT_LOG : "involves"
+    PREDICTION ||--o{ AUDIT_LOG : "tracks"
+    SYSTEM_STATS ||--o{ WEEKLY_STATS : "aggregates"
+    
+    PATIENT {
+        int id PK "Primary Key"
+        string patient_id UK "Unique Patient ID"
+        string first_name "First Name"
+        string last_name "Last Name"
+        int age "Age in years"
+        string gender "Male/Female/Other"
+        string phone "Contact Number"
+        string email "Email Address"
+        text address "Home Address"
+        string medical_record_number "MRN"
+        json emergency_contact "Emergency Contact Info"
+        json insurance_info "Insurance Details"
+        datetime created_at "Record Creation Time"
+        datetime updated_at "Last Update Time"
+    }
+    
+    PREDICTION {
+        string id PK "UUID Primary Key"
+        int patient_id FK "Foreign Key to Patient"
+        string image_filename "Stored Image Name"
+        string original_filename "Original Upload Name"
+        string image_path "File System Path"
+        string prediction "NORMAL or PNEUMONIA"
+        float confidence "Confidence Score 0-1"
+        json confidence_scores "Detailed Scores"
+        float inference_time "AI Processing Time"
+        json image_size "Width x Height"
+        text clinical_notes "Doctor Notes"
+        boolean reviewed "Review Status"
+        string reviewed_by "Reviewer ID"
+        datetime reviewed_at "Review Timestamp"
+        datetime created_at "Prediction Timestamp"
+    }
+    
+    AUDIT_LOG {
+        int id PK "Primary Key"
+        string user_id "User Identifier"
+        string action_type "Action Category"
+        string entity_type "Affected Entity"
+        string entity_id "Entity Identifier"
+        json details "Action Details"
+        string ip_address "User IP Address"
+        text user_agent "Browser Info"
+        datetime timestamp "Action Timestamp"
+    }
+    
+    SYSTEM_STATS {
+        int id PK "Primary Key"
+        datetime date "Statistics Date"
+        int total_patients "Patient Count"
+        int total_predictions "Prediction Count"
+        int predictions_today "Daily Predictions"
+        int pneumonia_cases "Pneumonia Detected"
+        int normal_cases "Normal Cases"
+        float average_confidence "Avg Confidence"
+        float model_accuracy "Model Performance"
+        int active_users "Active User Count"
+        datetime created_at "Stats Creation Time"
+    }
+    
+    WEEKLY_STATS {
+        int id PK "Primary Key"
+        datetime week_start "Week Start Date"
+        datetime week_end "Week End Date"
+        int predictions_count "Weekly Predictions"
+        float accuracy_rate "Weekly Accuracy"
+        int pneumonia_detected "Pneumonia Cases"
+        int normal_cases "Normal Cases"
+        int unique_patients "Unique Patients"
+        datetime created_at "Stats Creation Time"
+    }
