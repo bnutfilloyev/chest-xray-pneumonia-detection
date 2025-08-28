@@ -10,7 +10,7 @@ This file serves as a placeholder for the actual ONNX model file.
 ## To replace this placeholder:
 1. Train or obtain a pneumonia detection model
 2. Convert the model to ONNX format
-3. Replace this file with the actual model file named 'pneumonia_model.onnx'
+3. Replace this file with the actual model file named 'covid19_resnet.onnx'
 
 ## Expected model characteristics:
 - Architecture: EfficientNetB0 or similar

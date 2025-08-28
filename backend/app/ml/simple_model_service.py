@@ -25,7 +25,7 @@ class SimpleModelService:
         """Load model (simplified)"""
         try:
             # For now, just simulate loading
-            model_path = "/Users/bnutfilloyev/Developer/Freelance/pneumonia-app/backend/model/pneumonia_model.onnx"
+            model_path = "/Users/bnutfilloyev/Developer/Freelance/pneumonia-app/backend/model/covid19_resnet.onnx"
             
             if os.path.exists(model_path):
                 self.model_loaded = True

@@ -79,7 +79,7 @@
 - **Patients**: `/tmp/simple_patients.json`
 - **Predictions**: `/tmp/simple_predictions.json`
 - **Uploaded Images**: Processed in memory
-- **Model**: `backend/model/pneumonia_model.onnx`
+- **Model**: `backend/model/covid19_resnet.onnx`
 
 #### 🔄 **COMPLETE WORKFLOW TESTED**
 1. ✅ **Patient Management**: Create, read, update, delete, search

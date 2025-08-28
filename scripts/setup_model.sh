@@ -6,7 +6,7 @@
 echo "Setting up Pneumonia Detection Model..."
 
 MODEL_DIR="/Users/bnutfilloyev/Developer/Freelance/pneumonia-app/model"
-MODEL_FILE="$MODEL_DIR/pneumonia_model.onnx"
+MODEL_FILE="$MODEL_DIR/covid19_resnet.onnx"
 
 # Check if model already exists
 if [ -f "$MODEL_FILE" ]; then

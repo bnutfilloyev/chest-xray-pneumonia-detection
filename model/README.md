@@ -10,7 +10,7 @@
 ## Model Files Required
 Place the following files in this directory:
 
-1. `pneumonia_model.onnx` - The main ONNX model file
+1. `covid19_resnet.onnx` - The main ONNX model file
 2. `model_metadata.json` - Model metadata and configuration
 3. `labels.json` - Class labels mapping
 
