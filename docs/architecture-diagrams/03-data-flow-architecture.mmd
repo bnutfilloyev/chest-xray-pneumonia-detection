@@ -1,0 +1,65 @@
+graph LR
+    subgraph "External Systems"
+        HOSPITAL[🏥 Hospital Systems<br/>HL7/FHIR]
+        PACS[📡 PACS System<br/>DICOM Images]
+        LAB[🔬 Lab Systems<br/>Results]
+    end
+
+    subgraph "API Gateway"
+        GATEWAY[🚪 API Gateway<br/>Authentication<br/>Rate Limiting]
+    end
+
+    subgraph "Microservices"
+        AUTH_SVC[🔐 Auth Service<br/>JWT/OAuth2]
+        PATIENT_SVC[👥 Patient Service<br/>Demographics]
+        IMAGE_SVC[🖼️ Image Service<br/>DICOM Processing]
+        AI_SVC[🤖 AI Service<br/>Inference Engine]
+        REPORT_SVC[📊 Report Service<br/>Analytics]
+        AUDIT_SVC[📝 Audit Service<br/>Compliance]
+    end
+
+    subgraph "Data Storage"
+        PATIENT_DB[(👥 Patient DB<br/>PostgreSQL)]
+        IMAGE_STORE[(🖼️ Image Store<br/>S3/MinIO)]
+        AUDIT_DB[(📝 Audit DB<br/>PostgreSQL)]
+        CACHE[(⚡ Redis Cache)]
+        SEARCH[(🔍 Elasticsearch<br/>Search Index)]
+    end
+
+    subgraph "AI/ML Pipeline"
+        MODEL_STORE[(🧠 Model Store<br/>MLflow)]
+        INFERENCE[⚡ Inference Engine<br/>ONNX Runtime]
+        MONITORING[📈 ML Monitoring<br/>Model Drift]
+    end
+
+    %% External connections
+    HOSPITAL --> GATEWAY
+    PACS --> GATEWAY
+    LAB --> GATEWAY
+
+    %% Gateway routing
+    GATEWAY --> AUTH_SVC
+    GATEWAY --> PATIENT_SVC
+    GATEWAY --> IMAGE_SVC
+    GATEWAY --> AI_SVC
+    GATEWAY --> REPORT_SVC
+
+    %% Service dependencies
+    PATIENT_SVC --> PATIENT_DB
+    PATIENT_SVC --> CACHE
+    IMAGE_SVC --> IMAGE_STORE
+    AI_SVC --> INFERENCE
+    AI_SVC --> MODEL_STORE
+    REPORT_SVC --> PATIENT_DB
+    REPORT_SVC --> SEARCH
+    AUTH_SVC --> CACHE
+    AUDIT_SVC --> AUDIT_DB
+
+    %% ML pipeline
+    INFERENCE --> MODEL_STORE
+    INFERENCE --> MONITORING
+    AI_SVC --> AUDIT_SVC
+
+    style GATEWAY fill:#e1f5fe,stroke:#01579b
+    style AI_SVC fill:#f3e5f5,stroke:#7b1fa2
+    style INFERENCE fill:#e8f5e8,stroke:#2e7d32

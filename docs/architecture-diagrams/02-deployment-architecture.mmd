@@ -1,0 +1,81 @@
+graph TB
+    subgraph "Development Environment"
+        DEV_FE[React Dev Server<br/>localhost:3000]
+        DEV_BE[FastAPI Dev<br/>localhost:8000]
+        DEV_DB[(PostgreSQL<br/>localhost:5432)]
+        
+        DEV_FE --> DEV_BE
+        DEV_BE --> DEV_DB
+    end
+
+    subgraph "Docker Compose Environment"
+        DC_NGINX[Nginx Container<br/>:80,:443]
+        DC_FE[React Container<br/>:3000]
+        DC_BE[FastAPI Container<br/>:8000]
+        DC_DB[(PostgreSQL Container<br/>:5432)]
+        DC_REDIS[(Redis Container<br/>:6379)]
+        
+        DC_NGINX --> DC_FE
+        DC_NGINX --> DC_BE
+        DC_BE --> DC_DB
+        DC_BE --> DC_REDIS
+    end
+
+    subgraph "Production Kubernetes"
+        subgraph "Ingress"
+            INGRESS[🌐 Nginx Ingress<br/>SSL Termination]
+        end
+        
+        subgraph "Frontend Tier"
+            FE_POD1[React Pod 1]
+            FE_POD2[React Pod 2]
+            FE_SVC[Frontend Service]
+        end
+        
+        subgraph "Backend Tier"
+            BE_POD1[FastAPI Pod 1]
+            BE_POD2[FastAPI Pod 2]
+            BE_POD3[FastAPI Pod 3]
+            BE_SVC[Backend Service]
+        end
+        
+        subgraph "Data Tier"
+            POSTGRES[PostgreSQL StatefulSet]
+            REDIS[Redis Deployment]
+            PVC[(Persistent Volume<br/>Patient Data)]
+        end
+        
+        subgraph "AI/ML Tier"
+            MODEL_POD[Model Server Pod]
+            MODEL_PVC[(Model Storage<br/>ONNX Files)]
+        end
+
+        INGRESS --> FE_SVC
+        INGRESS --> BE_SVC
+        FE_SVC --> FE_POD1
+        FE_SVC --> FE_POD2
+        BE_SVC --> BE_POD1
+        BE_SVC --> BE_POD2
+        BE_SVC --> BE_POD3
+        BE_POD1 --> POSTGRES
+        BE_POD2 --> POSTGRES
+        BE_POD3 --> POSTGRES
+        BE_POD1 --> REDIS
+        BE_POD2 --> REDIS
+        BE_POD3 --> REDIS
+        BE_POD1 --> MODEL_POD
+        BE_POD2 --> MODEL_POD
+        BE_POD3 --> MODEL_POD
+        POSTGRES --> PVC
+        MODEL_POD --> MODEL_PVC
+    end
+
+    DEV_FE -.->|Build & Deploy| DC_FE
+    DEV_BE -.->|Build & Deploy| DC_BE
+    DC_FE -.->|CI/CD Pipeline| FE_POD1
+    DC_BE -.->|CI/CD Pipeline| BE_POD1
+
+    style INGRESS fill:#e1f5fe,stroke:#01579b
+    style FE_SVC fill:#e8f5e8,stroke:#2e7d32
+    style BE_SVC fill:#fff3e0,stroke:#f57c00
+    style POSTGRES fill:#f3e5f5,stroke:#7b1fa2

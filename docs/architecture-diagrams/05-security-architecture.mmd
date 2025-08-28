@@ -1,0 +1,61 @@
+graph TB
+    subgraph "Network Security"
+        WAF[🛡️ Web Application Firewall<br/>OWASP Protection]
+        LB[⚖️ Load Balancer<br/>SSL Termination]
+        VPN[🔒 VPN Gateway<br/>Admin Access]
+    end
+
+    subgraph "Application Security"
+        AUTH[🔐 Authentication<br/>OAuth2/SAML]
+        RBAC[👤 Role-Based Access<br/>Authorization]
+        JWT[🎟️ JWT Tokens<br/>Stateless Auth]
+        API_KEY[🔑 API Keys<br/>Service Auth]
+    end
+
+    subgraph "Data Security"
+        ENCRYPT[🔒 Encryption at Rest<br/>AES-256]
+        TLS[🔐 TLS 1.3<br/>Encryption in Transit]
+        BACKUP[💾 Encrypted Backups<br/>Point-in-Time Recovery]
+        MASK[🎭 Data Masking<br/>PHI Protection]
+    end
+
+    subgraph "Infrastructure Security"
+        RBAC_K8S[🔐 Kubernetes RBAC<br/>Pod Security]
+        SECRET[🔒 Secret Management<br/>Vault/K8s Secrets]
+        NETWORK[🌐 Network Policies<br/>Microsegmentation]
+        SCAN_IMG[🔍 Image Scanning<br/>Vulnerability Detection]
+    end
+
+    subgraph "Compliance & Monitoring"
+        AUDIT[📝 Audit Logging<br/>HIPAA Compliance]
+        SIEM[🕵️ SIEM<br/>Security Monitoring]
+        COMPLIANCE[⚖️ Compliance Dashboard<br/>SOC2/HIPAA]
+        INCIDENT[🚨 Incident Response<br/>Automated Workflows]
+    end
+
+    %% Security layers
+    WAF --> LB
+    LB --> AUTH
+    AUTH --> RBAC
+    RBAC --> JWT
+    JWT --> API_KEY
+
+    %% Data protection
+    ENCRYPT --> TLS
+    TLS --> BACKUP
+    BACKUP --> MASK
+
+    %% Infrastructure
+    RBAC_K8S --> SECRET
+    SECRET --> NETWORK
+    NETWORK --> SCAN_IMG
+
+    %% Monitoring
+    AUDIT --> SIEM
+    SIEM --> COMPLIANCE
+    COMPLIANCE --> INCIDENT
+
+    style WAF fill:#ffebee,stroke:#d32f2f
+    style AUTH fill:#e1f5fe,stroke:#01579b
+    style ENCRYPT fill:#e8f5e8,stroke:#2e7d32
+    style AUDIT fill:#fff3e0,stroke:#f57c00

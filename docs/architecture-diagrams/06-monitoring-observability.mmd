@@ -1,0 +1,68 @@
+graph TB
+    subgraph "Applications"
+        FE[⚛️ React Frontend]
+        BE[🔥 FastAPI Backend]
+        DB[(🗄️ PostgreSQL)]
+        AI[🤖 AI Service]
+    end
+
+    subgraph "Metrics Collection"
+        PROM[📊 Prometheus<br/>Metrics Server]
+        NODE[📡 Node Exporter<br/>System Metrics]
+        APP[📈 App Metrics<br/>Custom Metrics]
+    end
+
+    subgraph "Logging Stack"
+        FLUENTD[📤 Fluentd<br/>Log Collector]
+        ELASTIC[🔍 Elasticsearch<br/>Log Storage]
+        KIBANA[📊 Kibana<br/>Log Visualization]
+    end
+
+    subgraph "Tracing"
+        JAEGER[🔍 Jaeger<br/>Distributed Tracing]
+        TRACE[📍 Trace Collector<br/>OpenTelemetry]
+    end
+
+    subgraph "Visualization"
+        GRAFANA[📈 Grafana<br/>Dashboards]
+        ALERTS[🚨 AlertManager<br/>Notifications]
+    end
+
+    subgraph "External Services"
+        SLACK[💬 Slack<br/>Notifications]
+        EMAIL[📧 Email<br/>Alerts]
+        PAGER[📞 PagerDuty<br/>Incident Management]
+    end
+
+    %% Metrics flow
+    FE --> APP
+    BE --> APP
+    DB --> NODE
+    AI --> APP
+    APP --> PROM
+    NODE --> PROM
+
+    %% Logging flow
+    FE --> FLUENTD
+    BE --> FLUENTD
+    DB --> FLUENTD
+    AI --> FLUENTD
+    FLUENTD --> ELASTIC
+    ELASTIC --> KIBANA
+
+    %% Tracing flow
+    BE --> TRACE
+    AI --> TRACE
+    TRACE --> JAEGER
+
+    %% Visualization
+    PROM --> GRAFANA
+    PROM --> ALERTS
+    ALERTS --> SLACK
+    ALERTS --> EMAIL
+    ALERTS --> PAGER
+
+    style PROM fill:#e8f5e8,stroke:#2e7d32
+    style GRAFANA fill:#e3f2fd,stroke:#1976d2
+    style ALERTS fill:#ffebee,stroke:#d32f2f
+    style JAEGER fill:#f3e5f5,stroke:#7b1fa2

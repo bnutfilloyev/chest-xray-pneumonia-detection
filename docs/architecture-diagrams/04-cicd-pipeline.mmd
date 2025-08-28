@@ -1,0 +1,71 @@
+graph TB
+    subgraph "Source Control"
+        GIT[📚 Git Repository<br/>GitHub/GitLab]
+        BRANCH[🌿 Feature Branch]
+        MAIN[🎯 Main Branch]
+    end
+
+    subgraph "CI Pipeline"
+        TRIGGER[⚡ Webhook Trigger]
+        BUILD[🔨 Build Stage<br/>Docker Images]
+        TEST[🧪 Test Stage<br/>Unit/Integration]
+        SCAN[🔍 Security Scan<br/>SAST/DAST]
+        QUALITY[📊 Quality Gate<br/>SonarQube]
+    end
+
+    subgraph "Artifact Storage"
+        REGISTRY[📦 Docker Registry<br/>Harbor/ECR]
+        HELM[⚓ Helm Charts<br/>Chart Museum]
+    end
+
+    subgraph "CD Pipeline"
+        DEPLOY_DEV[🚀 Deploy Dev<br/>Auto Deploy]
+        DEPLOY_STAGE[🎭 Deploy Staging<br/>Manual Approval]
+        DEPLOY_PROD[🏭 Deploy Production<br/>Blue/Green]
+    end
+
+    subgraph "Environments"
+        DEV[🔧 Development<br/>Feature Testing]
+        STAGE[🎯 Staging<br/>UAT Environment]
+        PROD[🏭 Production<br/>Live System]
+    end
+
+    subgraph "Monitoring"
+        METRICS[📈 Metrics<br/>Prometheus]
+        LOGS[📋 Logging<br/>ELK Stack]
+        ALERTS[🚨 Alerting<br/>PagerDuty]
+        HEALTH[💚 Health Checks<br/>Kubernetes Probes]
+    end
+
+    %% Source flow
+    BRANCH --> TRIGGER
+    MAIN --> TRIGGER
+
+    %% CI flow
+    TRIGGER --> BUILD
+    BUILD --> TEST
+    TEST --> SCAN
+    SCAN --> QUALITY
+    QUALITY --> REGISTRY
+    QUALITY --> HELM
+
+    %% CD flow
+    REGISTRY --> DEPLOY_DEV
+    REGISTRY --> DEPLOY_STAGE
+    REGISTRY --> DEPLOY_PROD
+    DEPLOY_DEV --> DEV
+    DEPLOY_STAGE --> STAGE
+    DEPLOY_PROD --> PROD
+
+    %% Monitoring
+    DEV --> METRICS
+    STAGE --> METRICS
+    PROD --> METRICS
+    METRICS --> LOGS
+    LOGS --> ALERTS
+    PROD --> HEALTH
+
+    style BUILD fill:#e3f2fd,stroke:#1976d2
+    style TEST fill:#e8f5e8,stroke:#2e7d32
+    style PROD fill:#fff3e0,stroke:#f57c00
+    style ALERTS fill:#ffebee,stroke:#d32f2f

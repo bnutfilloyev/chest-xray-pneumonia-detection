@@ -1,0 +1,72 @@
+graph TB
+    subgraph "Client Layer"
+        WEB[🌐 Web Browser<br/>React SPA]
+        MOB[📱 Mobile Browser<br/>Responsive UI]
+    end
+
+    subgraph "Presentation Layer"
+        NGINX[⚡ Nginx<br/>Reverse Proxy<br/>Port 80/443]
+        CDN[🚀 CDN<br/>Static Assets]
+    end
+
+    subgraph "Application Layer"
+        REACT[⚛️ React Frontend<br/>TypeScript<br/>Port 3000]
+        API[🔥 FastAPI Backend<br/>Python 3.11<br/>Port 8000]
+    end
+
+    subgraph "Business Logic Layer"
+        AUTH[🔐 Authentication<br/>JWT Tokens]
+        PATIENT[👥 Patient Service<br/>CRUD Operations]
+        AI[🤖 AI Service<br/>ONNX Runtime]
+        UPLOAD[📤 File Service<br/>Image Processing]
+        STATS[📊 Analytics Service<br/>Statistics]
+    end
+
+    subgraph "Data Layer"
+        DB[(🗄️ PostgreSQL<br/>Patient Data)]
+        FILES[(📁 File System<br/>X-ray Images)]
+        MODEL[(🧠 ONNX Model<br/>EfficientNetB0)]
+        CACHE[(⚡ Redis Cache<br/>Sessions)]
+    end
+
+    subgraph "Infrastructure Layer"
+        DOCKER[🐳 Docker<br/>Containerization]
+        K8S[☸️ Kubernetes<br/>Orchestration]
+        MONITOR[📈 Monitoring<br/>Prometheus/Grafana]
+    end
+
+    %% Client connections
+    WEB --> NGINX
+    MOB --> NGINX
+
+    %% Proxy routing
+    NGINX --> REACT
+    NGINX --> API
+    CDN --> REACT
+
+    %% Application services
+    REACT --> API
+    API --> AUTH
+    API --> PATIENT
+    API --> AI
+    API --> UPLOAD
+    API --> STATS
+
+    %% Data connections
+    PATIENT --> DB
+    AI --> MODEL
+    UPLOAD --> FILES
+    STATS --> DB
+    AUTH --> CACHE
+
+    %% Infrastructure
+    REACT -.-> DOCKER
+    API -.-> DOCKER
+    DB -.-> DOCKER
+    DOCKER -.-> K8S
+    K8S -.-> MONITOR
+
+    style WEB fill:#e3f2fd,stroke:#1976d2
+    style API fill:#e8f5e8,stroke:#2e7d32
+    style DB fill:#fff3e0,stroke:#f57c00
+    style AI fill:#f3e5f5,stroke:#7b1fa2
